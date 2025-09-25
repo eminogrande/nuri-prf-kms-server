@@ -1,0 +1,7 @@
+node_modules/
+.vercel
+.env
+*.log
+certs/
+test-*.js
+.DS_Store

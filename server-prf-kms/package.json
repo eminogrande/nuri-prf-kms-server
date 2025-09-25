@@ -1,0 +1,44 @@
+{
+  "name": "nuri-prf-kms-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Nuri PRF Co-signer Server with AWS KMS Integration",
+  "main": "server-prf-kms.js",
+  "scripts": {
+    "start": "node server-prf-kms.js",
+    "dev": "KMS_SIMULATION=true node --watch server-prf-kms.js",
+    "test": "KMS_SIMULATION=true node test-kms-security.js",
+    "deploy": "npm run deploy:create-kms && npm run deploy:server",
+    "deploy:create-kms": "aws kms create-key --policy file://deployment/aws-kms-policy.json",
+    "deploy:server": "echo 'Deploy to AWS ECS/Lambda/EC2'"
+  },
+  "dependencies": {
+    "@aws-sdk/client-kms": "^3.0.0",
+    "@aws-sdk/client-secrets-manager": "^3.0.0",
+    "@noble/ciphers": "^2.0.0",
+    "@noble/curves": "^2.0.0",
+    "@noble/hashes": "^2.0.1",
+    "@scure/base": "^2.0.0",
+    "@scure/btc-signer": "^2.0.1",
+    "base64url": "^3.0.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "bitcoin",
+    "musig2",
+    "kms",
+    "aws",
+    "prf",
+    "webauthn"
+  ],
+  "author": "",
+  "license": "MIT"
+}

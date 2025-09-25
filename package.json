@@ -1,0 +1,30 @@
+{
+  "name": "musig2-js-test",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "verify": "node verify-versions.js",
+    "prestart": "node verify-versions.js",
+    "test": "node verify-versions.js && node final-verification.js"
+  },
+  "dependencies": {
+    "@noble/ciphers": "^2.0.0",
+    "@noble/curves": "^2.0.0",
+    "@noble/hashes": "^2.0.1",
+    "@scure/base": "^2.0.0",
+    "@scure/btc-signer": "^2.0.1",
+    "base64url": "^3.0.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "graphene-pk11": "^2.0.26",
+    "node-fetch": "^3.3.2",
+    "uuid": "^13.0.0"
+  },
+  "description": "",
+  "main": "final-verification.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

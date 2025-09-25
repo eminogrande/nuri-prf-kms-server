@@ -1,0 +1,1217 @@
+{
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "22:20",
+    "end": "31:1",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:150:29:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:181:29:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:191:27:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:251:19:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:297:32:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:345:35:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:158:28:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:188:28:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:223:28:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:244:28:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:284:28:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:340:28:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:383:28:<anonymous>",
+      "<native>:Error"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "33:19",
+    "end": "449:1",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:34:21:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:84:37:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:146:25:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:150:29:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:167:32:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:181:29:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:191:27:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:251:19:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:297:32:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:345:35:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:386:36:<anonymous>",
+      "<@paulmillr/jsbt/test>.should"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:34:21:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "34:20",
+    "end": "83:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "<native>:Uint8Array",
+      "<@noble/curves/utils>.randomBytes",
+      "<@noble/curves/secp256k1>.schnorr.verify"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:84:37:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "84:36",
+    "end": "145:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "<native>:Uint8Array",
+      "<@noble/curves/utils>.randomBytes",
+      "<@noble/curves/secp256k1>.schnorr.verify"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:146:25:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "146:24",
+    "end": "149:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:150:29:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "150:28",
+    "end": "166:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>",
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:153:37:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "153:36",
+    "end": "153:53",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:158:28:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "158:27",
+    "end": "164:7",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:160:29:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "160:28",
+    "end": "160:45",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:161:31:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "161:30",
+    "end": "161:46",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:167:32:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "167:31",
+    "end": "180:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:181:29:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "181:28",
+    "end": "190:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>",
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:183:46:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "183:45",
+    "end": "183:90",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:187:46:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "187:45",
+    "end": "187:90",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:188:28:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "188:27",
+    "end": "188:65",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:191:27:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "191:26",
+    "end": "249:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>",
+      "<native>:Uint8Array",
+      "<native>:Error",
+      "<@noble/curves/utils>.bytesToNumberBE",
+      "<@noble/curves/utils>.concatBytes",
+      "<@noble/curves/utils>.hexToBytes",
+      "<@noble/curves/secp256k1>.secp256k1….multiply",
+      "<@noble/curves/secp256k1>.secp256k1….toBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:205:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "205:40",
+    "end": "205:51",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:206:45:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "206:44",
+    "end": "206:91",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:219:44:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "219:43",
+    "end": "219:54",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:223:28:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "223:27",
+    "end": "227:7",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:231:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "231:40",
+    "end": "231:51",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:232:45:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "232:44",
+    "end": "232:60",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:241:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "241:40",
+    "end": "241:51",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:242:45:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "242:44",
+    "end": "242:60",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:244:28:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "244:27",
+    "end": "247:7",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:251:19:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "251:18",
+    "end": "295:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>",
+      "<native>:Uint8Array",
+      "<native>:Error",
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:262:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "262:40",
+    "end": "262:51",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:263:45:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "263:44",
+    "end": "263:60",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:264:46:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "264:45",
+    "end": "264:61",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:284:28:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "284:27",
+    "end": "293:7",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>"
+    ],
+    "callees": [
+      "<native>:Uint8Array",
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:287:29:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "287:28",
+    "end": "287:39",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:289:31:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "289:30",
+    "end": "289:46",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:297:32:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "297:31",
+    "end": "344:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>",
+      "<native>:Error",
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:303:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "303:40",
+    "end": "303:51",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:334:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "334:40",
+    "end": "334:51",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:340:28:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "340:27",
+    "end": "342:7",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:345:35:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "345:34",
+    "end": "385:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>",
+      "<@noble/curves/utils>.hexToBytes",
+      "<@noble/curves/secp256k1>.schnorr.verify"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:348:45:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "348:44",
+    "end": "348:87",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:351:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "351:40",
+    "end": "351:83",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:352:42:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "352:41",
+    "end": "352:83",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:354:40:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "354:39",
+    "end": "354:80",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:369:45:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "369:44",
+    "end": "369:87",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:372:41:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "372:40",
+    "end": "372:83",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:373:42:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "373:41",
+    "end": "373:83",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:375:40:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "375:39",
+    "end": "375:80",
+    "callers": [],
+    "callees": [
+      "<@noble/curves/utils>.hexToBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:383:28:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "383:27",
+    "end": "383:61",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:22:21:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:386:36:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "386:35",
+    "end": "448:3",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:388:25:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:389:25:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:439:14:<anonymous>",
+      "<native>:Array.prototype.push",
+      "<native>:Error",
+      "<@noble/curves/utils>.numberToBytesBE",
+      "<@noble/curves/utils>.randomBytes",
+      "<@noble/curves/secp256k1>.schnorr.verify"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:387:18:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "387:17",
+    "end": "387:40",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:388:25:<anonymous>",
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:389:25:<anonymous>"
+    ],
+    "callees": [
+      "<@noble/curves/utils>.randomBytes"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:388:25:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "388:24",
+    "end": "388:46",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:386:36:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:387:18:<anonymous>"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:389:25:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "389:24",
+    "end": "389:46",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:386:36:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:387:18:<anonymous>"
+    ]
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:439:14:<anonymous>": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "439:13",
+    "end": "439:47",
+    "callers": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:386:36:<anonymous>"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:hsm-musig2-signer.js:29:1:taggedHash": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "29:0",
+    "end": "38:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:127:1:deterministicNonceHash",
+      "musig2-js-test:hsm-musig2-signer.js:140:1:taggedInt",
+      "musig2-js-test:hsm-musig2-signer.js:193:1:keyAggL"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "46:7",
+    "end": "123:1",
+    "callers": [
+      "musig2-js-test:hsm-secure-operations.js:112:8:performMuSig2SignInHSM"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:29:1:taggedHash",
+      "musig2-js-test:hsm-musig2-signer.js:127:1:deterministicNonceHash",
+      "musig2-js-test:hsm-musig2-signer.js:140:1:taggedInt",
+      "musig2-js-test:hsm-musig2-signer.js:144:1:xor",
+      "musig2-js-test:hsm-musig2-signer.js:152:1:hasEven",
+      "musig2-js-test:hsm-musig2-signer.js:156:1:isZero",
+      "musig2-js-test:hsm-musig2-signer.js:160:1:pointToBytes",
+      "musig2-js-test:hsm-musig2-signer.js:166:1:encodePublicNonce",
+      "musig2-js-test:hsm-musig2-signer.js:173:1:decodePublicNonce",
+      "musig2-js-test:hsm-musig2-signer.js:180:1:nonceAggregate",
+      "musig2-js-test:hsm-musig2-signer.js:193:1:keyAggL",
+      "musig2-js-test:hsm-musig2-signer.js:197:1:getSecondKey",
+      "musig2-js-test:hsm-musig2-signer.js:204:1:keyAggCoeff",
+      "musig2-js-test:hsm-musig2-signer.js:209:1:keyAggregate",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<@noble/curves/secp256k1>.secp256k1….fromBytes",
+      "<@noble/curves/secp256k1>.secp256k1….multiply",
+      "<@noble/curves/secp256k1>.secp256k1….toBytes",
+      "<@noble/curves/secp256k1>.secp256k1….neg",
+      "<@noble/curves/secp256k1>.secp256k1….mul",
+      "<@noble/curves/secp256k1>.secp256k1….add"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:127:1:deterministicNonceHash": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "127:0",
+    "end": "138:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:29:1:taggedHash",
+      "<@noble/curves/utils>.numberToBytesBE",
+      "<@noble/curves/secp256k1>.secp256k1….fromBytes"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:140:1:taggedInt": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "140:0",
+    "end": "142:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:204:1:keyAggCoeff"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:29:1:taggedHash",
+      "<@noble/curves/secp256k1>.secp256k1….fromBytes"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:144:1:xor": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "144:0",
+    "end": "150:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:hsm-musig2-signer.js:152:1:hasEven": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "152:0",
+    "end": "154:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:209:1:keyAggregate"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:hsm-musig2-signer.js:156:1:isZero": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "156:0",
+    "end": "158:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM"
+    ],
+    "callees": [
+      "<@noble/curves/secp256k1>.secp256k1….equals"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:160:1:pointToBytes": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "160:0",
+    "end": "164:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM"
+    ],
+    "callees": [
+      "<@noble/curves/secp256k1>.secp256k1….toBytes",
+      "<@noble/curves/secp256k1>.secp256k1….slice"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:166:1:encodePublicNonce": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "166:0",
+    "end": "171:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:180:1:nonceAggregate"
+    ],
+    "callees": [
+      "<@noble/curves/secp256k1>.secp256k1….toBytes"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:173:1:decodePublicNonce": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "173:0",
+    "end": "178:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:180:1:nonceAggregate"
+    ],
+    "callees": [
+      "<@noble/curves/secp256k1>.secp256k1….fromBytes"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:180:1:nonceAggregate": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "180:0",
+    "end": "191:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:173:1:decodePublicNonce",
+      "musig2-js-test:hsm-musig2-signer.js:166:1:encodePublicNonce",
+      "<@noble/curves/secp256k1>.secp256k1….add"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:193:1:keyAggL": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "193:0",
+    "end": "195:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:209:1:keyAggregate"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:29:1:taggedHash"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:197:1:getSecondKey": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "197:0",
+    "end": "202:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:209:1:keyAggregate"
+    ],
+    "callees": [
+      "<@noble/curves/utils>.equalBytes"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:204:1:keyAggCoeff": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "204:0",
+    "end": "207:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM",
+      "musig2-js-test:hsm-musig2-signer.js:209:1:keyAggregate"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:140:1:taggedInt",
+      "<@noble/curves/utils>.equalBytes"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:209:1:keyAggregate": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "209:0",
+    "end": "231:1",
+    "callers": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:197:1:getSecondKey",
+      "musig2-js-test:hsm-musig2-signer.js:193:1:keyAggL",
+      "musig2-js-test:hsm-musig2-signer.js:204:1:keyAggCoeff",
+      "musig2-js-test:hsm-musig2-signer.js:152:1:hasEven",
+      "<@noble/curves/secp256k1>.secp256k1….fromBytes",
+      "<@noble/curves/secp256k1>.secp256k1….multiply",
+      "<@noble/curves/secp256k1>.secp256k1….neg",
+      "<@noble/curves/secp256k1>.secp256k1….mul",
+      "<@noble/curves/secp256k1>.secp256k1….add"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js:236:8:verifyHSMSecurity": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "236:7",
+    "end": "268:1",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:hsm-secure-operations.js:27:8:initializeMasterKey": {
+    "filepath": "hsm-secure-operations.js",
+    "start": "27:7",
+    "end": "33:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js:791:3:startServer",
+      "musig2-js-test:test-hsm-security.js:18:1:runTests"
+    ],
+    "callees": [
+      "<native>:Error"
+    ]
+  },
+  "musig2-js-test:hsm-secure-operations.js:39:8:deriveKeyInHSM": {
+    "filepath": "hsm-secure-operations.js",
+    "start": "39:7",
+    "end": "56:1",
+    "callers": [
+      "musig2-js-test:hsm-secure-operations.js:77:8:testSecurityModel",
+      "musig2-js-test:server-prf-hsm.js:286:29:<anonymous>",
+      "musig2-js-test:server-prf-hsm.js:628:28:<anonymous>",
+      "musig2-js-test:test-hsm-security.js:18:1:runTests"
+    ],
+    "callees": [
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<@noble/curves/secp256k1>.secp256k1….slice"
+    ]
+  },
+  "musig2-js-test:hsm-secure-operations.js:62:8:deriveEnhancedSeed": {
+    "filepath": "hsm-secure-operations.js",
+    "start": "62:7",
+    "end": "71:1",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:hsm-secure-operations.js:77:8:testSecurityModel": {
+    "filepath": "hsm-secure-operations.js",
+    "start": "77:7",
+    "end": "105:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js:791:3:startServer",
+      "musig2-js-test:test-hsm-security.js:18:1:runTests"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-secure-operations.js:39:8:deriveKeyInHSM",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<@noble/curves/secp256k1>.secp256k1….slice",
+      "<@noble/curves/secp256k1>.secp256k1….toString"
+    ]
+  },
+  "musig2-js-test:hsm-secure-operations.js:112:8:performMuSig2SignInHSM": {
+    "filepath": "hsm-secure-operations.js",
+    "start": "112:7",
+    "end": "134:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js:628:28:<anonymous>"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-musig2-signer.js:46:8:performMuSig2SignInHSM"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:34:1:pick": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "34:0",
+    "end": "37:1",
+    "callers": [
+      "musig2-js-test:server-prf-encrypted.js:366:18:<anonymous>"
+    ],
+    "callees": [
+      "<native>:String"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:40:1:isCompressed33": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "40:0",
+    "end": "42:1",
+    "callers": [],
+    "callees": [
+      "<native>:RegExp.prototype.test"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:45:1:toXOnlyHex": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "45:0",
+    "end": "49:1",
+    "callers": [],
+    "callees": [
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@noble/hashes/utils>.bytesToHex….padStart"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:52:1:encryptData": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "52:0",
+    "end": "91:1",
+    "callers": [
+      "musig2-js-test:server-prf-encrypted.js:285:29:<anonymous>",
+      "musig2-js-test:server-prf-encrypted.js:632:28:<anonymous>"
+    ],
+    "callees": [
+      "<native>:TextEncoder",
+      "<native>:JSON.stringify",
+      "<native>:Uint8Array",
+      "<@noble/hashes/utils>.randomBytes",
+      "<@noble/hashes/hkdf>.hkdf",
+      "<@noble/hashes/sha2>.sha256",
+      "<@noble/ciphers/chacha>.xchacha20poly1305",
+      "<@noble/curves/ed25519>.x25519.getPublicKey",
+      "<@noble/curves/ed25519>.x25519.getSharedSecret",
+      "<base64url>.default.encode",
+      "<@noble/curves/ed25519>.x25519….randomSecretKey",
+      "<@noble/ciphers/chacha>.xchacha20poly1305….encrypt"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:94:19:<anonymous>": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "94:18",
+    "end": "282:1",
+    "callers": [
+      "musig2-js-test:server-prf-encrypted.js"
+    ],
+    "callees": [
+      "<native>:Date.now",
+      "<native>:Map.prototype.set"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:285:29:<anonymous>": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "285:28",
+    "end": "363:1",
+    "callers": [
+      "musig2-js-test:server-prf-encrypted.js"
+    ],
+    "callees": [
+      "musig2-js-test:server-prf-encrypted.js:52:1:encryptData",
+      "<native>:Map.prototype.get",
+      "<native>:Date.now",
+      "<native>:Error",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<base64url>.default.toBuffer",
+      "<@noble/curves/secp256k1>.secp256k1….slice"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:366:18:<anonymous>": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "366:17",
+    "end": "629:1",
+    "callers": [
+      "musig2-js-test:server-prf-encrypted.js"
+    ],
+    "callees": [
+      "musig2-js-test:server-prf-encrypted.js:34:1:pick",
+      "<native>:Date",
+      "<native>:Date.prototype.toISOString",
+      "<uuid/dist-node>.v4",
+      "<uuid/dist-node>.v4….slice"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:632:28:<anonymous>": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "632:27",
+    "end": "789:1",
+    "callers": [
+      "musig2-js-test:server-prf-encrypted.js"
+    ],
+    "callees": [
+      "musig2-js-test:server-prf-encrypted.js:52:1:encryptData",
+      "<native>:Date.now",
+      "<native>:Error",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@scure/btc-signer/musig2>.sortKeys",
+      "<@scure/btc-signer/musig2>.deterministicSign",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<base64url>.default.toBuffer",
+      "<@noble/hashes/utils>.bytesToHex….slice"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js:797:31:<anonymous>": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "797:30",
+    "end": "812:3",
+    "callers": [
+      "musig2-js-test:server-prf-encrypted.js"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:server-prf-hsm.js:35:1:pick": {
+    "filepath": "server-prf-hsm.js",
+    "start": "35:0",
+    "end": "38:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js:362:18:<anonymous>"
+    ],
+    "callees": [
+      "<native>:String"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:41:1:isCompressed33": {
+    "filepath": "server-prf-hsm.js",
+    "start": "41:0",
+    "end": "43:1",
+    "callers": [],
+    "callees": [
+      "<native>:RegExp.prototype.test"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:46:1:toXOnlyHex": {
+    "filepath": "server-prf-hsm.js",
+    "start": "46:0",
+    "end": "50:1",
+    "callers": [],
+    "callees": [
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@noble/hashes/utils>.bytesToHex….padStart"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:53:1:encryptData": {
+    "filepath": "server-prf-hsm.js",
+    "start": "53:0",
+    "end": "92:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js:286:29:<anonymous>",
+      "musig2-js-test:server-prf-hsm.js:628:28:<anonymous>"
+    ],
+    "callees": [
+      "<native>:TextEncoder",
+      "<native>:JSON.stringify",
+      "<native>:Uint8Array",
+      "<@noble/hashes/utils>.randomBytes",
+      "<@noble/hashes/hkdf>.hkdf",
+      "<@noble/hashes/sha2>.sha256",
+      "<@noble/ciphers/chacha>.xchacha20poly1305",
+      "<@noble/curves/ed25519>.x25519.getPublicKey",
+      "<@noble/curves/ed25519>.x25519.getSharedSecret",
+      "<base64url>.default.encode",
+      "<@noble/curves/ed25519>.x25519….randomSecretKey",
+      "<@noble/ciphers/chacha>.xchacha20poly1305….encrypt"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:95:19:<anonymous>": {
+    "filepath": "server-prf-hsm.js",
+    "start": "95:18",
+    "end": "283:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js"
+    ],
+    "callees": [
+      "<native>:Date.now",
+      "<native>:Map.prototype.set"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:286:29:<anonymous>": {
+    "filepath": "server-prf-hsm.js",
+    "start": "286:28",
+    "end": "359:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js"
+    ],
+    "callees": [
+      "musig2-js-test:server-prf-hsm.js:53:1:encryptData",
+      "musig2-js-test:hsm-secure-operations.js:39:8:deriveKeyInHSM",
+      "<native>:Map.prototype.get",
+      "<native>:Date.now",
+      "<native>:Error",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<base64url>.default.toBuffer"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:362:18:<anonymous>": {
+    "filepath": "server-prf-hsm.js",
+    "start": "362:17",
+    "end": "625:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js"
+    ],
+    "callees": [
+      "musig2-js-test:server-prf-hsm.js:35:1:pick",
+      "<native>:Date",
+      "<native>:Date.prototype.toISOString",
+      "<uuid/dist-node>.v4",
+      "<uuid/dist-node>.v4….slice"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:628:28:<anonymous>": {
+    "filepath": "server-prf-hsm.js",
+    "start": "628:27",
+    "end": "781:1",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js"
+    ],
+    "callees": [
+      "musig2-js-test:server-prf-hsm.js:53:1:encryptData",
+      "musig2-js-test:hsm-secure-operations.js:39:8:deriveKeyInHSM",
+      "musig2-js-test:hsm-secure-operations.js:112:8:performMuSig2SignInHSM",
+      "<native>:Date.now",
+      "<native>:Error",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@scure/btc-signer/musig2>.sortKeys",
+      "<base64url>.default.toBuffer",
+      "<@noble/hashes/utils>.bytesToHex….slice"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:791:3:startServer": {
+    "filepath": "server-prf-hsm.js",
+    "start": "791:2",
+    "end": "830:3",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js"
+    ],
+    "callees": [
+      "musig2-js-test:server-prf-hsm.js:809:35:<anonymous>",
+      "musig2-js-test:hsm-secure-operations.js:27:8:initializeMasterKey",
+      "musig2-js-test:hsm-secure-operations.js:77:8:testSecurityModel",
+      "<express>.default….listen"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js:809:35:<anonymous>": {
+    "filepath": "server-prf-hsm.js",
+    "start": "809:34",
+    "end": "825:7",
+    "callers": [
+      "musig2-js-test:server-prf-hsm.js:791:3:startServer"
+    ],
+    "callees": []
+  },
+  "musig2-js-test:test-hsm-security.js:18:1:runTests": {
+    "filepath": "test-hsm-security.js",
+    "start": "18:0",
+    "end": "119:1",
+    "callers": [
+      "musig2-js-test:test-hsm-security.js"
+    ],
+    "callees": [
+      "musig2-js-test:hsm-secure-operations.js:27:8:initializeMasterKey",
+      "musig2-js-test:hsm-secure-operations.js:39:8:deriveKeyInHSM",
+      "musig2-js-test:hsm-secure-operations.js:77:8:testSecurityModel",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey"
+    ]
+  },
+  "musig2-js-test:test-hsm-security.js:122:18:<anonymous>": {
+    "filepath": "test-hsm-security.js",
+    "start": "122:17",
+    "end": "125:1",
+    "callers": [],
+    "callees": []
+  },
+  "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts": {
+    "filepath": "example-scure-btc-signer-bip327-musig2.test.ts",
+    "start": "1:0",
+    "end": "451:0",
+    "callers": [],
+    "callees": [
+      "musig2-js-test:example-scure-btc-signer-bip327-musig2.test.ts:33:20:<anonymous>",
+      "<@noble/curves/utils>.bytesToNumberBE",
+      "<@noble/curves/utils>.concatBytes",
+      "<@noble/curves/utils>.hexToBytes",
+      "<@noble/curves/utils>.numberToBytesBE",
+      "<@noble/curves/utils>.randomBytes",
+      "<@paulmillr/jsbt/test>.describe",
+      "<@paulmillr/jsbt/test>.should",
+      "<@noble/curves/secp256k1>.schnorr.verify",
+      "<@paulmillr/jsbt/test>.should.runWhen",
+      "<@noble/curves/secp256k1>.secp256k1….multiply",
+      "<@noble/curves/secp256k1>.secp256k1….toBytes"
+    ]
+  },
+  "musig2-js-test:hsm-musig2-signer.js": {
+    "filepath": "hsm-musig2-signer.js",
+    "start": "1:0",
+    "end": "273:2",
+    "callers": [],
+    "callees": [
+      "<native>:Error",
+      "<@noble/curves/utils>.numberToBytesBE",
+      "<@noble/curves/utils>.equalBytes",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<@noble/curves/secp256k1>.secp256k1….fromBytes",
+      "<@noble/curves/secp256k1>.secp256k1….multiply",
+      "<@noble/curves/secp256k1>.secp256k1….toBytes",
+      "<@noble/curves/secp256k1>.secp256k1….neg",
+      "<@noble/curves/secp256k1>.secp256k1….mul",
+      "<@noble/curves/secp256k1>.secp256k1….add",
+      "<@noble/curves/secp256k1>.secp256k1….slice",
+      "<@noble/curves/secp256k1>.secp256k1….equals"
+    ]
+  },
+  "musig2-js-test:hsm-secure-operations.js": {
+    "filepath": "hsm-secure-operations.js",
+    "start": "1:0",
+    "end": "142:2",
+    "callers": [],
+    "callees": [
+      "<native>:Error",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<@noble/curves/secp256k1>.secp256k1….slice",
+      "<@noble/curves/secp256k1>.secp256k1….toString"
+    ]
+  },
+  "musig2-js-test:server-prf-encrypted.js": {
+    "filepath": "server-prf-encrypted.js",
+    "start": "1:0",
+    "end": "813:1",
+    "callers": [],
+    "callees": [
+      "musig2-js-test:server-prf-encrypted.js:94:19:<anonymous>",
+      "musig2-js-test:server-prf-encrypted.js:285:29:<anonymous>",
+      "musig2-js-test:server-prf-encrypted.js:366:18:<anonymous>",
+      "musig2-js-test:server-prf-encrypted.js:632:28:<anonymous>",
+      "musig2-js-test:server-prf-encrypted.js:797:31:<anonymous>",
+      "<native>:Map",
+      "<native>:Date.now",
+      "<native>:BigInt",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@noble/hashes/utils>.randomBytes",
+      "<express>.default",
+      "<cors>.default",
+      "<@noble/hashes/hkdf>.hkdf",
+      "<@noble/hashes/sha2>.sha256",
+      "<@noble/ciphers/chacha>.xchacha20poly1305",
+      "<@scure/btc-signer/musig2>.sortKeys",
+      "<@scure/btc-signer/musig2>.deterministicSign",
+      "<uuid/dist-node>.v4",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey",
+      "<express>.default.json",
+      "<express>.default.urlencoded",
+      "<@noble/curves/ed25519>.x25519.getPublicKey",
+      "<@noble/curves/ed25519>.x25519.getSharedSecret",
+      "<base64url>.default.encode",
+      "<base64url>.default.toBuffer",
+      "<@noble/hashes/utils>.bytesToHex….padStart",
+      "<@noble/hashes/utils>.bytesToHex….slice",
+      "<express>.default….use",
+      "<express>.default….get",
+      "<express>.default….post",
+      "<express>.default….listen",
+      "<@noble/curves/ed25519>.x25519….randomSecretKey",
+      "<@noble/ciphers/chacha>.xchacha20poly1305….encrypt",
+      "<uuid/dist-node>.v4….slice",
+      "<@noble/curves/secp256k1>.secp256k1….slice"
+    ]
+  },
+  "musig2-js-test:server-prf-hsm.js": {
+    "filepath": "server-prf-hsm.js",
+    "start": "1:0",
+    "end": "834:1",
+    "callers": [],
+    "callees": [
+      "musig2-js-test:server-prf-hsm.js:791:3:startServer",
+      "musig2-js-test:server-prf-hsm.js:95:19:<anonymous>",
+      "musig2-js-test:server-prf-hsm.js:286:29:<anonymous>",
+      "musig2-js-test:server-prf-hsm.js:362:18:<anonymous>",
+      "musig2-js-test:server-prf-hsm.js:628:28:<anonymous>",
+      "<native>:Map",
+      "<native>:Date.now",
+      "<native>:BigInt",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@noble/hashes/utils>.randomBytes",
+      "<express>.default",
+      "<cors>.default",
+      "<@noble/hashes/hkdf>.hkdf",
+      "<@noble/hashes/sha2>.sha256",
+      "<@noble/ciphers/chacha>.xchacha20poly1305",
+      "<@scure/btc-signer/musig2>.sortKeys",
+      "<uuid/dist-node>.v4",
+      "<express>.default.json",
+      "<express>.default.urlencoded",
+      "<@noble/curves/ed25519>.x25519.getPublicKey",
+      "<@noble/curves/ed25519>.x25519.getSharedSecret",
+      "<base64url>.default.encode",
+      "<base64url>.default.toBuffer",
+      "<@noble/hashes/utils>.bytesToHex….padStart",
+      "<@noble/hashes/utils>.bytesToHex….slice",
+      "<express>.default….use",
+      "<express>.default….get",
+      "<express>.default….post",
+      "<express>.default….listen",
+      "<@noble/curves/ed25519>.x25519….randomSecretKey",
+      "<@noble/ciphers/chacha>.xchacha20poly1305….encrypt",
+      "<uuid/dist-node>.v4….slice"
+    ]
+  },
+  "musig2-js-test:test-hsm-security.js": {
+    "filepath": "test-hsm-security.js",
+    "start": "1:0",
+    "end": "125:3",
+    "callers": [],
+    "callees": [
+      "musig2-js-test:test-hsm-security.js:18:1:runTests",
+      "<@noble/hashes/utils>.bytesToHex",
+      "<@noble/curves/secp256k1>.secp256k1.getPublicKey"
+    ]
+  }
+}
