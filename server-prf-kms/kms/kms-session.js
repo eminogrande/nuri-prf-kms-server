@@ -1,57 +1,30 @@
 /**
  * AWS KMS Session Manager
- * Replaces CloudHSM with AWS KMS for cryptographic operations
+ * Handles GenerateMac operations against the configured HMAC key.
  */
 
-import {
-  KMSClient,
-  GenerateMacCommand,
-  CreateKeyCommand,
-  DescribeKeyCommand,
-  GetParametersForImportCommand,
-  ImportKeyMaterialCommand,
-} from "@aws-sdk/client-kms";
-import {
-  SecretsManagerClient,
-  GetSecretValueCommand,
-  CreateSecretCommand,
-  UpdateSecretCommand,
-} from "@aws-sdk/client-secrets-manager";
+import { KMSClient, GenerateMacCommand, DescribeKeyCommand } from "@aws-sdk/client-kms";
 import crypto from "crypto";
 import { asBuffer, secureWipe } from "./kms-utils.js";
+import { recordAuditEntry } from "../audit-store.js";
+
+const HMAC_ALGORITHM = "HMAC_SHA_256";
 
 class KmsSessionManager {
   constructor() {
-    const {
-      AWS_REGION = "us-east-1",
-      AWS_ACCESS_KEY_ID,
-      AWS_SECRET_ACCESS_KEY,
-      AWS_SESSION_TOKEN,
-      KMS_KEY_ID,
-      KMS_MASTER_SECRET_NAME = "nuri-master-secret",
-      NURI_MASTER_SECRET,
-      KMS_SIMULATION = false, // NO SIMULATION EVER
-    } = process.env;
+    const { AWS_REGION = "eu-north-1", KMS_KEY_ID } = process.env;
 
     this.region = AWS_REGION;
     this.kmsKeyId = KMS_KEY_ID;
-    this.masterSecretName = KMS_MASTER_SECRET_NAME;
-    this.simulationMode = false; // NEVER SIMULATE
-    this.localMasterSecret = NURI_MASTER_SECRET;
 
-    // AWS Clients
     this.kmsClient = null;
-    this.secretsClient = null;
-
-    // Cache
-    this.masterKey = null;
-    this.lastLogMac = null;
     this.initialized = false;
     this.initializing = null;
+    this.lastLogMac = null;
   }
 
   get isSimulation() {
-    return this.simulationMode;
+    return false;
   }
 
   async init() {
@@ -62,31 +35,24 @@ class KmsSessionManager {
     }
 
     this.initializing = (async () => {
-      // REAL AWS KMS ONLY - NO SIMULATION
-      console.log("🔒 Initializing AWS KMS Session");
-
-      // Initialize AWS clients
-      const config = {
-        region: this.region,
-      };
-
-      this.kmsClient = new KMSClient(config);
-      this.secretsClient = new SecretsManagerClient(config);
-
       if (!this.kmsKeyId) {
-        throw new Error(
-          "KMS_KEY_ID environment variable required for KMS operations"
-        );
+        throw new Error("KMS_KEY_ID environment variable required for KMS operations");
       }
 
-      // Verify KMS key exists and is accessible
+      this.kmsClient = new KMSClient({ region: this.region });
+
+      if (typeof this.kmsClient.config.credentials === "function") {
+        try {
+          await this.kmsClient.config.credentials();
+        } catch (error) {
+          throw new Error(`AWS credentials not available: ${error.message}`);
+        }
+      }
+
       await this.verifyKmsKey();
 
-      // Load master secret from Secrets Manager
-      await this.loadMasterSecret();
-
       this.initialized = true;
-      console.log("✅ AWS KMS Session initialized");
+      console.log("✅ AWS KMS session ready");
     })();
 
     try {
@@ -94,16 +60,6 @@ class KmsSessionManager {
     } finally {
       this.initializing = null;
     }
-  }
-
-  async shutdown() {
-    if (this.masterKey) {
-      secureWipe(this.masterKey);
-    }
-    this.masterKey = null;
-    this.kmsClient = null;
-    this.secretsClient = null;
-    this.initialized = false;
   }
 
   ensureReady() {
@@ -114,94 +70,38 @@ class KmsSessionManager {
 
   async verifyKmsKey() {
     try {
-      const command = new DescribeKeyCommand({
-        KeyId: this.kmsKeyId,
-      });
-
-      const response = await this.kmsClient.send(command);
+      const response = await this.kmsClient.send(
+        new DescribeKeyCommand({ KeyId: this.kmsKeyId })
+      );
 
       if (!response.KeyMetadata?.Enabled) {
         throw new Error(`KMS key ${this.kmsKeyId} is not enabled`);
       }
 
-      console.log(`✅ KMS Key verified: ${response.KeyMetadata.Arn}`);
+      console.log(`✅ KMS key verified: ${response.KeyMetadata.Arn}`);
     } catch (error) {
       throw new Error(`Failed to verify KMS key: ${error.message}`);
     }
   }
 
-  async loadMasterSecret() {
-    try {
-      // Try to get existing secret from Secrets Manager
-      const getCommand = new GetSecretValueCommand({
-        SecretId: this.masterSecretName,
-      });
-
-      const response = await this.secretsClient.send(getCommand);
-
-      if (response.SecretBinary) {
-        this.masterKey = Buffer.from(response.SecretBinary);
-      } else if (response.SecretString) {
-        // Handle hex-encoded string
-        this.masterKey = Buffer.from(response.SecretString, "hex");
-      }
-
-      console.log(`✅ Master secret loaded from Secrets Manager`);
-    } catch (error) {
-      if (error.name === "ResourceNotFoundException") {
-        // Create new master secret if it doesn't exist
-        console.log("⚠️ Master secret not found, creating new one...");
-        await this.createMasterSecret();
-      } else {
-        throw new Error(`Failed to load master secret: ${error.message}`);
-      }
-    }
-  }
-
-  async createMasterSecret() {
-    // Generate new 256-bit master secret
-    const newMasterKey = crypto.randomBytes(32);
-
-    try {
-      const command = new CreateSecretCommand({
-        Name: this.masterSecretName,
-        Description: "Nuri PRF Co-signer Master Secret",
-        SecretBinary: newMasterKey,
-        Tags: [
-          { Key: "Application", Value: "nuri-prf-signer" },
-          { Key: "Type", Value: "master-secret" },
-        ],
-      });
-
-      await this.secretsClient.send(command);
-      this.masterKey = newMasterKey;
-
-      console.log(`✅ New master secret created in Secrets Manager`);
-    } catch (error) {
-      secureWipe(newMasterKey);
-      throw new Error(`Failed to create master secret: ${error.message}`);
-    }
-  }
-
-  signHmac(data) {
+  async signHmac(data) {
+    this.ensureReady();
     const message = asBuffer(data);
 
     try {
-      if (this.simulationMode) {
-        // Local HMAC computation for simulation
-        this.ensureReady();
-        const hmac = crypto.createHmac("sha256", this.masterKey);
-        hmac.update(message);
-        return hmac.digest();
-      } else {
-        // AWS KMS HMAC - This would require KMS HMAC key type
-        // For now, we'll use local HMAC with KMS-protected master key
-        // In production, you'd want to use KMS GenerateMac with HMAC_SHA_256
-        this.ensureReady();
-        const hmac = crypto.createHmac("sha256", this.masterKey);
-        hmac.update(message);
-        return hmac.digest();
+      const { Mac } = await this.kmsClient.send(
+        new GenerateMacCommand({
+          KeyId: this.kmsKeyId,
+          MacAlgorithm: HMAC_ALGORITHM,
+          Message: message,
+        })
+      );
+
+      if (!Mac) {
+        throw new Error("KMS GenerateMac returned an empty response");
       }
+
+      return Buffer.from(Mac);
     } finally {
       secureWipe(message);
     }
@@ -212,12 +112,10 @@ class KmsSessionManager {
       throw new Error("Random length must be positive");
     }
 
-    // Use crypto.randomBytes for both simulation and production
-    // AWS KMS GenerateRandom could be used but adds latency
     return crypto.randomBytes(length);
   }
 
-  deriveEphemeralKey(tag = "nuri-session-key") {
+  async deriveEphemeralKey(tag = "nuri-session-key") {
     const nonce = this.generateRandom(32);
     const context = Buffer.concat([
       Buffer.from(tag, "utf8"),
@@ -225,7 +123,7 @@ class KmsSessionManager {
       Buffer.from(Date.now().toString(16), "hex"),
     ]);
 
-    const mac = this.signHmac(context);
+    const mac = await this.signHmac(context);
     const sessionKey = crypto.createHash("sha256").update(mac).digest();
 
     secureWipe(context);
@@ -237,7 +135,7 @@ class KmsSessionManager {
     };
   }
 
-  attestLog(event, payload = {}, { emit = true } = {}) {
+  async attestLog(event, payload = {}, { emit = true } = {}) {
     const timestamp = new Date().toISOString();
     const nonce = this.generateRandom(16);
     const serializedPayload = Buffer.from(
@@ -253,32 +151,43 @@ class KmsSessionManager {
       this.lastLogMac ?? Buffer.alloc(0),
     ]);
 
-    const mac = this.signHmac(logMaterial);
+    const mac = await this.signHmac(logMaterial);
+    const macBuffer = Buffer.from(mac);
 
     const entry = {
       timestamp,
       event,
       payload,
       nonce: nonce.toString("hex"),
-      mac: mac.toString("hex"),
+      mac: macBuffer.toString("hex"),
       previousMac: this.lastLogMac ? this.lastLogMac.toString("hex") : null,
-      kmsMode: !this.simulationMode,
+      kmsMode: true,
     };
 
-    this.lastLogMac = mac;
+    if (this.lastLogMac) {
+      secureWipe(this.lastLogMac);
+    }
+    this.lastLogMac = macBuffer;
+
+    recordAuditEntry(entry);
 
     if (emit) {
-      const record = {
-        type: this.simulationMode ? "kms.simulation.attestedLog" : "kms.attestedLog",
-        ...entry,
-      };
-      console.log(JSON.stringify(record));
+      console.log(JSON.stringify({ type: "kms.attestedLog", ...entry }));
     }
 
     secureWipe(serializedPayload);
     secureWipe(logMaterial);
 
     return entry;
+  }
+
+  async shutdown() {
+    if (this.lastLogMac) {
+      secureWipe(this.lastLogMac);
+      this.lastLogMac = null;
+    }
+    this.kmsClient = null;
+    this.initialized = false;
   }
 }
 

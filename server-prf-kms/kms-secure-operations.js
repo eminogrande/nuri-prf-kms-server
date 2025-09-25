@@ -2,7 +2,7 @@
  * KMS Secure Operations Module
  *
  * SECURITY MODEL:
- * 1. Master key is protected by AWS KMS/Secrets Manager
+ * 1. Master key is protected by AWS KMS (HMAC_256)
  * 2. PRF alone cannot derive keys
  * 3. Private scalars are zeroized immediately after use
  * 4. Only public values or signatures ever leave the signer
@@ -21,12 +21,12 @@ import {
 
 const DERIVATION_CONTEXT = Buffer.from("nuri-cosigner", "utf8");
 
-function attestOperation(event, walletId, prfBytes) {
+async function attestOperation(event, walletId, prfBytes) {
   try {
     const prfCopy = prfBytes ? asBuffer(prfBytes) : null;
     const prfHash =
       prfCopy && prfCopy.length ? sha256Hex(prfCopy).slice(0, 16) : null;
-    kmsSession.attestLog(
+    await kmsSession.attestLog(
       event,
       {
         walletId: String(walletId ?? "default"),
@@ -47,15 +47,15 @@ async function deriveSeed(prfBytes, walletId) {
   const walletBuffer = Buffer.from(normalizeWalletId(walletId), "utf8");
   const message = Buffer.concat([prfBuffer, DERIVATION_CONTEXT, walletBuffer]);
 
-  let mac;
   try {
-    mac = kmsSession.signHmac(message);
-    return Buffer.from(mac);
+    const mac = await kmsSession.signHmac(message);
+    const seed = Buffer.from(mac);
+    secureWipe(mac);
+    return seed;
   } finally {
     secureWipe(prfBuffer);
     secureWipe(walletBuffer);
     secureWipe(message);
-    secureWipe(mac);
   }
 }
 
@@ -65,17 +65,15 @@ async function deriveSeed(prfBytes, walletId) {
 export async function initializeMasterKey() {
   await kmsSession.init();
 
-  // KMS mode with optional simulation for development
-
-  kmsSession.attestLog("kms.initializeMasterKey", {
-    simulation: kmsSession.isSimulation,
+  await kmsSession.attestLog("kms.initializeMasterKey", {
+    kmsMode: true,
   });
 
   return true;
 }
 
 /**
- * Derive Bitcoin key using PRF + Master Secret
+ * Derive Bitcoin key using PRF + KMS HMAC key
  * Enhanced security: PRF alone cannot derive keys
  */
 export async function deriveKeyInHSM(prfBytes, walletId = "default") {
@@ -86,12 +84,12 @@ export async function deriveKeyInHSM(prfBytes, walletId = "default") {
     const publicKey = secp256k1.getPublicKey(privateKey, true);
     const xOnlyPubkey = publicKey.slice(1, 33);
 
-    attestOperation("kms.deriveKeyInKMS", walletId, prfBytes);
+    await attestOperation("kms.deriveKeyInKMS", walletId, prfBytes);
 
     return {
       publicKey,
       xOnlyPubkey,
-      masterEnhanced: true, // Using KMS-protected master key
+      masterEnhanced: true, // Derived via AWS KMS GenerateMac
     };
   } finally {
     secureWipe(seed);
@@ -106,7 +104,7 @@ export async function deriveKeyInHSM(prfBytes, walletId = "default") {
  */
 export async function deriveEnhancedSeed(prfBytes, walletId = "default") {
   const seed = await deriveSeed(prfBytes, walletId);
-  attestOperation("kms.deriveEnhancedSeed", walletId, prfBytes);
+  await attestOperation("kms.deriveEnhancedSeed", walletId, prfBytes);
   return seed;
 }
 
@@ -153,10 +151,11 @@ export async function testSecurityModel(prfBytes, walletId) {
   secureWipe(insecureSeed);
   secureWipe(insecurePrivKey);
 
-  attestOperation("kms.testSecurityModel", walletId, prfBytes);
+  await attestOperation("kms.testSecurityModel", walletId, prfBytes);
 
   return {
     secure: !keysMatch,
+    compatible: keysMatch,
     prfOnlyKey: insecurePubKey,
     masterEnhancedKey: secureResult.publicKey,
   };
@@ -187,7 +186,7 @@ export async function performMuSig2SignInHSM(
     auxRand,
   );
 
-  attestOperation("kms.performMuSig2SignInKMS", walletId, prfBytes);
+  await attestOperation("kms.performMuSig2SignInKMS", walletId, prfBytes);
 
   return result;
 }

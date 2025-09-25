@@ -4,19 +4,19 @@ A secure WebAuthn PRF co-signing server using AWS KMS for master key protection.
 
 ## Features
 
-- ✅ AWS KMS/Secrets Manager for master key protection
+- ✅ AWS KMS (HMAC_256) for master key protection
 - ✅ PRF alone cannot derive keys (requires KMS access)
 - ✅ MuSig2 multi-signature support
 - ✅ WebAuthn PRF integration
 - ✅ Sealed box encryption for app communication
-- ✅ Local simulation mode for development
+- ✅ Built-in `/audit` dashboard for live KMS events
 
 ## Security Model
 
-1. **Master Secret**: Stored in AWS Secrets Manager, never exposed to application
-2. **Key Derivation**: HMAC(master_secret, PRF + context + wallet_id)
-3. **Access Control**: IAM policies restrict KMS/Secrets Manager access
-4. **Audit Trail**: All operations logged via CloudTrail
+1. **HMAC Key**: Materialised only inside AWS KMS (HMAC_256 key)
+2. **Key Derivation**: `GenerateMac` with PRF + context + wallet identifier
+3. **Access Control**: IAM policies restrict the KMS key to this service
+4. **Audit Trail**: KMS usage visible via CloudTrail/CloudWatch metrics
 5. **Key Isolation**: Private keys are derived on-demand and immediately wiped
 
 ## Quick Start (Local Development)
@@ -29,17 +29,15 @@ npm install
 ### 2. Set up environment variables
 ```bash
 cp .env.example .env
-# Edit .env and set:
-# KMS_SIMULATION=true
-# NURI_MASTER_SECRET=<64-hex-chars>
+# Edit .env with your AWS region, KMS key ID, and credentials (if not using an instance role)
 ```
 
-### 3. Run in simulation mode
+### 3. Run locally against AWS KMS
 ```bash
-npm run dev
+AWS_ACCESS_KEY_ID=... AWS_SECRET_ACCESS_KEY=... npm run dev
 ```
 
-The server will start on http://localhost:1337 in simulation mode (no AWS required).
+The server requires AWS KMS; there is no local fallback.
 
 ## AWS Deployment
 
@@ -92,8 +90,6 @@ PORT=1337
 NODE_ENV=production
 AWS_REGION=us-east-1
 KMS_KEY_ID=<your-kms-key-id>
-KMS_MASTER_SECRET_NAME=nuri-master-secret
-KMS_SIMULATION=false
 ```
 
 ### Step 4: Deploy to AWS
@@ -191,22 +187,22 @@ The server produces cryptographically attested logs for audit purposes:
 
 ## Security Considerations
 
-1. **Never expose master secret**: The master secret should only exist in AWS Secrets Manager
+1. **Never expose HMAC key**: The HMAC_256 key never leaves AWS KMS
 2. **Use IAM roles**: Don't use long-lived AWS credentials
 3. **Enable CloudTrail**: Audit all KMS operations
 4. **Rotate keys regularly**: Use AWS KMS key rotation features
-5. **Restrict network access**: Use VPC endpoints for KMS/Secrets Manager
+5. **Restrict network access**: Use VPC endpoints for KMS
 6. **Monitor for anomalies**: Set up CloudWatch alarms for unusual activity
 
 ## Local Development vs Production
 
 | Feature | Local (Simulation) | Production (KMS) |
 |---------|-------------------|------------------|
-| Master Key | Local env variable | AWS Secrets Manager |
-| HMAC Operations | Node.js crypto | AWS KMS |
-| Key Protection | Process memory | Hardware security |
-| Audit Logging | Console output | CloudTrail |
-| Cost | Free | Pay per API call |
+| Master Key | n/a (simulation removed) | AWS KMS (HMAC_256 key) |
+| HMAC Operations | n/a | AWS KMS (`GenerateMac`) |
+| Key Protection | n/a | Hardware security |
+| Audit Logging | n/a | CloudTrail |
+| Cost | n/a | Pay per API call |
 
 ## Troubleshooting
 
@@ -216,13 +212,13 @@ The server produces cryptographically attested logs for audit purposes:
 - Ensure key is in the correct region
 
 ### "Cannot derive keys in simulation"
-- Set KMS_SIMULATION=true
-- Provide NURI_MASTER_SECRET in .env
+- This build no longer supports simulation. Run against AWS KMS with valid credentials.
 
-### "Access denied to Secrets Manager"
-- Check IAM role has secretsmanager permissions
-- Verify secret name matches KMS_MASTER_SECRET_NAME
+### "Access denied to KMS"
+- Check IAM role/user grants `kms:GenerateMac`
+- Verify the key policy allows this principal
 
 ## License
 
 MIT
+- Visit `/audit` to view live attested logs. `/audit/logs` returns the same data as JSON for custom tooling.

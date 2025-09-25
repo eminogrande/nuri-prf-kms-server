@@ -31,8 +31,7 @@ module.exports = {
       PORT: 1337,
       NODE_ENV: 'production',
       AWS_REGION: 'eu-north-1',
-      KMS_KEY_ID: '07daf2a3-aa06-4600-934f-72ec2fcb4ff0',
-      SECRET_NAME: 'nuri-master-secret'
+      KMS_KEY_ID: '07daf2a3-aa06-4600-934f-72ec2fcb4ff0'
     }
   }]
 };

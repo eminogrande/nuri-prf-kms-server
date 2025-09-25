@@ -84,9 +84,7 @@ module.exports = {
       PORT: 1337,
       NODE_ENV: 'production',
       AWS_REGION: 'eu-north-1',
-      KMS_KEY_ID: '46ae12a8-7002-46ef-b469-d8eefc8942cd',
-      SECRET_NAME: 'nuri-master-secret',
-      // Remove KMS_SIMULATION for production!
+      KMS_KEY_ID: '46ae12a8-7002-46ef-b469-d8eefc8942cd'
     }
   }]
 };
@@ -107,7 +105,7 @@ EOF
 
 echo ""
 echo "📌 Important Notes:"
-echo "1. The server will use AWS KMS (not simulation) when KMS_SIMULATION is not set"
-echo "2. The IAM role NuriPRFSignerProfile is already attached to the instance"
-echo "3. For HTTPS, you'll need to point a domain to the EC2 IP and run certbot"
+echo "1. Ensure the instance role has kms:GenerateMac permission on the target key"
+echo "2. Attach the IAM role NuriPRFSignerProfile (or similar least-privileged role)"
+echo "3. For HTTPS, point a domain to the EC2 IP and run certbot"
 echo "4. The server will run on port 1337 behind nginx on port 80/443"

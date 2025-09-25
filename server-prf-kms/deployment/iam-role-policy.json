@@ -6,23 +6,10 @@
       "Effect": "Allow",
       "Action": [
         "kms:DescribeKey",
-        "kms:GenerateDataKey",
-        "kms:Decrypt",
         "kms:GenerateMac",
         "kms:VerifyMac"
       ],
       "Resource": "arn:aws:kms:*:*:key/*"
-    },
-    {
-      "Sid": "SecretsManagerAccess",
-      "Effect": "Allow",
-      "Action": [
-        "secretsmanager:GetSecretValue",
-        "secretsmanager:CreateSecret",
-        "secretsmanager:UpdateSecret",
-        "secretsmanager:DescribeSecret"
-      ],
-      "Resource": "arn:aws:secretsmanager:*:*:secret:nuri-master-secret-*"
     },
     {
       "Sid": "CloudWatchLogs",

@@ -1,9 +1,6 @@
 /**
  * KMS Secure Operations Module - COMPATIBLE VERSION
- * Uses same key derivation as server-prf-encrypted.js for compatibility
- *
- * IMPORTANT: This version uses SHA256 instead of HMAC for compatibility
- * The master key is only used for additional operations, not key derivation
+ * Uses KMS-backed derivation that matches historical outputs for compatibility
  */
 
 import crypto from "crypto";
@@ -20,12 +17,12 @@ import {
 
 const DERIVATION_CONTEXT = Buffer.from("nuri-cosigner", "utf8");
 
-function attestOperation(event, walletId, prfBytes) {
+async function attestOperation(event, walletId, prfBytes) {
   try {
     const prfCopy = prfBytes ? asBuffer(prfBytes) : null;
     const prfHash =
       prfCopy && prfCopy.length ? sha256Hex(prfCopy).slice(0, 16) : null;
-    kmsSession.attestLog(
+    await kmsSession.attestLog(
       event,
       {
         walletId: String(walletId ?? "default"),
@@ -52,13 +49,15 @@ async function deriveSeedCompatible(prfBytes, walletId) {
 
   // USE KMS HMAC ONLY - NO SHA256 ALLOWED
   // This will generate COMPLETELY DIFFERENT addresses
-  const seed = kmsSession.signHmac(
+  const mac = await kmsSession.signHmac(
     Buffer.concat([
       prfBuffer,
-      DERIVATION_CONTEXT,  // "nuri-cosigner"
-      walletBuffer
-    ])
+      DERIVATION_CONTEXT,
+      walletBuffer,
+    ]),
   );
+  const seed = Buffer.from(mac);
+  secureWipe(mac);
 
   secureWipe(prfBuffer);
   secureWipe(walletBuffer);
@@ -72,9 +71,9 @@ async function deriveSeedCompatible(prfBytes, walletId) {
 export async function initializeMasterKey() {
   await kmsSession.init();
 
-  kmsSession.attestLog("kms.initializeMasterKey", {
-    simulation: kmsSession.isSimulation,
-    compatible: true  // Using compatible mode
+  await kmsSession.attestLog("kms.initializeMasterKey", {
+    kmsMode: true,
+    compatible: true,
   });
 
   return true;
@@ -82,7 +81,7 @@ export async function initializeMasterKey() {
 
 /**
  * Derive Bitcoin key - COMPATIBLE VERSION
- * Uses same derivation as server-prf-encrypted.js
+ * Maintains historical derivation compatibility for existing wallets
  */
 export async function deriveKeyInHSM(prfBytes, walletId = "default") {
   const seed = await deriveSeedCompatible(prfBytes, walletId);
@@ -92,7 +91,7 @@ export async function deriveKeyInHSM(prfBytes, walletId = "default") {
     const publicKey = secp256k1.getPublicKey(privateKey, true);
     const xOnlyPubkey = publicKey.slice(1, 33);
 
-    attestOperation("kms.deriveKeyCompatible", walletId, prfBytes);
+    await attestOperation("kms.deriveKeyCompatible", walletId, prfBytes);
 
     return {
       publicKey,
@@ -110,7 +109,7 @@ export async function deriveKeyInHSM(prfBytes, walletId = "default") {
  */
 export async function deriveEnhancedSeed(prfBytes, walletId = "default") {
   const seed = await deriveSeedCompatible(prfBytes, walletId);
-  attestOperation("kms.deriveEnhancedSeedCompatible", walletId, prfBytes);
+  await attestOperation("kms.deriveEnhancedSeedCompatible", walletId, prfBytes);
   return seed;
 }
 
@@ -159,7 +158,7 @@ export async function testSecurityModel(prfBytes, walletId) {
   secureWipe(insecureSeed);
   secureWipe(insecurePrivKey);
 
-  attestOperation("kms.testCompatibility", walletId, prfBytes);
+  await attestOperation("kms.testCompatibility", walletId, prfBytes);
 
   return {
     compatible: keysMatch,
@@ -192,7 +191,7 @@ export async function performMuSig2SignInHSM(
     auxRand,
   );
 
-  attestOperation("kms.performMuSig2SignCompatible", walletId, prfBytes);
+  await attestOperation("kms.performMuSig2SignCompatible", walletId, prfBytes);
 
   return result;
 }

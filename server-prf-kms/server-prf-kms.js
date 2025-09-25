@@ -1,5 +1,5 @@
 // PRF Server with AWS KMS integration
-// Uses AWS KMS/Secrets Manager for master key protection
+// Uses AWS KMS for master key protection
 
 import express from "express";
 import cors from "cors";
@@ -21,6 +21,7 @@ import { concatBytes } from "@noble/curves/utils.js";
 import { v4 as uuidv4 } from "uuid";
 import kmsOps from "./kms-secure-operations-compatible.js";
 import kmsSession from "./kms/kms-session.js";
+import { getAuditEntries } from "./audit-store.js";
 import { secureWipe } from "./kms/kms-utils.js";
 
 const app = express();
@@ -42,6 +43,77 @@ function pick(q, ...names) {
     if (q[n] != null && String(q[n]).length) return String(q[n]);
   return null;
 }
+
+// Simple audit dashboard endpoints
+app.get("/audit/logs", (req, res) => {
+  const limit = Number.parseInt(req.query.limit, 10);
+  const entries = getAuditEntries();
+  const data = Number.isFinite(limit) && limit > 0 ? entries.slice(0, limit) : entries;
+  res.json({ entries: data });
+});
+
+app.get("/audit", (_req, res) => {
+  res.type("html").send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>KMS Audit Dashboard</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 24px; background: #0f172a; color: #e2e8f0; }
+    h1 { margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1e293b; }
+    th { background: #1e293b; }
+    tr:nth-child(even) { background: #111827; }
+    code { font-family: Menlo, Monaco, Consolas, monospace; font-size: 0.85rem; }
+    .meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>KMS Audit Dashboard</h1>
+  <div class="meta">
+    <div>Last refresh: <span id="ts">--</span></div>
+    <div>Total entries: <span id="count">0</span></div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Event</th>
+        <th>Wallet</th>
+        <th>PRF Hash</th>
+        <th>MAC</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <script>
+    async function refresh() {
+      const res = await fetch('/audit/logs?limit=200');
+      const data = await res.json();
+      const rows = document.getElementById('rows');
+      rows.innerHTML = '';
+      for (const entry of data.entries) {
+        const tr = document.createElement('tr');
+        const wallet = entry?.payload?.walletId ?? '--';
+        const prfHash = entry?.payload?.prfHash ?? '--';
+        tr.innerHTML =
+          '<td><code>' + entry.timestamp + '</code></td>' +
+          '<td>' + entry.event + '</td>' +
+          '<td><code>' + wallet + '</code></td>' +
+          '<td><code>' + prfHash + '</code></td>' +
+          '<td><code>' + entry.mac.slice(0, 16) + '…</code></td>';
+        rows.appendChild(tr);
+      }
+      document.getElementById('ts').textContent = new Date().toLocaleString();
+      document.getElementById('count').textContent = data.entries.length;
+    }
+    refresh();
+    setInterval(refresh, 5000);
+  </script>
+</body>
+</html>`);
+});
 
 // Validates if hex is 33-byte compressed key
 function isCompressed33(h) {
@@ -866,23 +938,18 @@ if (!process.env.VERCEL) {
       // and generating completely different addresses
       if (securityTest.compatible) {
         console.error(
-          "❌ SECURITY FAILURE: Still using old SHA256 derivation!",
+          "❌ SECURITY FAILURE: legacy derivation detected — exiting",
         );
         process.exit(1);
       }
 
-      if (securityTest.compatible) {
-        console.log("⚠️ Running in COMPATIBLE mode: Using SHA256 derivation for app compatibility");
-        console.log("   Note: This matches server-prf-encrypted.js behavior\n");
-      } else {
-        console.log("✅ Security test passed: PRF alone cannot derive keys\n");
-      }
+      console.log("✅ Security test passed: PRF alone cannot derive keys\n");
 
       // Start server
-      kmsSession.attestLog("server.start", {
+      await kmsSession.attestLog("server.start", {
         port: PORT,
         environment: process.env.NODE_ENV || "development",
-        kmsMode: !kmsSession.isSimulation,
+        kmsMode: true,
       });
 
       let shuttingDown = false;
@@ -908,11 +975,11 @@ if (!process.env.VERCEL) {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔐 Private keys: Secured by AWS KMS
 📍 http://localhost:${PORT}
-🔧 Mode: ${kmsSession.isSimulation ? 'Local Simulation' : 'AWS KMS'}
+🔧 Mode: AWS KMS
 
 Features:
 ✅ WebAuthn PRF for key derivation
-✅ AWS KMS/Secrets Manager integration
+✅ AWS KMS HMAC integration
 ✅ Proper sealed box encryption
 ✅ Compatible with the app
 

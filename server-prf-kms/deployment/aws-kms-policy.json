@@ -20,8 +20,6 @@
       },
       "Action": [
         "kms:DescribeKey",
-        "kms:GenerateDataKey",
-        "kms:Decrypt",
         "kms:GenerateMac",
         "kms:VerifyMac"
       ],

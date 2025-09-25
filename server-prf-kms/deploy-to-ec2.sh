@@ -35,7 +35,6 @@ cat > package.json << 'EOF'
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-kms": "^3.0.0",
-    "@aws-sdk/client-secrets-manager": "^3.0.0",
     "@noble/ciphers": "^2.0.0",
     "@noble/curves": "^2.0.0",
     "@noble/hashes": "^2.0.1",
@@ -59,8 +58,6 @@ PORT=1337
 NODE_ENV=production
 AWS_REGION=us-east-1
 KMS_KEY_ID=46ae12a8-7002-46ef-b469-d8eefc8942cd
-KMS_MASTER_SECRET_NAME=nuri-master-secret
-KMS_SIMULATION=false
 EOF
 
 # Create systemd service

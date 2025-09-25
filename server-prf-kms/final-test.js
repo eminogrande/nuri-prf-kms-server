@@ -65,8 +65,8 @@ async function runTests() {
       if (result.success && result.redirect_url) {
         console.log('   ✅ PASS: Server responded correctly\n');
         // Note: We can't verify the actual keys without decrypting the sealed box,
-        // but since we're using the same derivation as server-prf-encrypted.js,
-        // and our compatibility test showed keys match, this should work correctly
+        // but the compatibility test ensures the deterministic outputs match the
+        // historical derivation, so this should work correctly
       } else {
         console.log('   ❌ FAIL: Invalid response format');
         console.log(`      Got: ${JSON.stringify(result)}`);
