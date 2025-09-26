@@ -748,133 +748,162 @@ app.get("/sign", async (req, res) => {
 app.post("/sign-with-prf", async (req, res) => {
   console.log("POST /sign-with-prf", req.body);
 
-  const {
-    wallet_id,
-    prf,
-    msg32,
-    client_pk33,
-    client_pub_nonce,
-    state,
-    return_url,
-    tweak32,
-    pk_app,
-    psbt_b64,
-  } = req.body;
+  const { wallet_id, prf, sign_requests, state, return_url, pk_app } = req.body;
 
   if (!prf || !wallet_id) {
     return res.status(400).json({ error: "Missing required parameters" });
   }
 
   try {
-    // Convert PRF to bytes
     const prfBytes = base64url.toBuffer(prf);
 
-    // Get public key from KMS - private key protected by KMS
+    const requestItems = Array.isArray(sign_requests) && sign_requests.length
+      ? sign_requests
+      : [
+          {
+            msg32: req.body.msg32,
+            client_pk33: req.body.client_pk33,
+            client_pub_nonce: req.body.client_pub_nonce,
+            tweak32: req.body.tweak32,
+            input_index: req.body.input_index ?? 0,
+          },
+        ];
+
+    if (!requestItems.every((item) => item && typeof item === "object")) {
+      return res.status(400).json({ error: "sign_requests must be an array of objects" });
+    }
+
     const kmsKey = await kmsOps.deriveKeyInHSM(prfBytes, wallet_id);
     const publicKey = kmsKey.publicKey;
     const pubkeyHex = bytesToHex(publicKey);
 
     console.log(`✅ Derived key for signing wallet ${wallet_id} (KMS secured)`);
     console.log(`   Public key: ${pubkeyHex.slice(0, 16)}...`);
-    console.log(`   Private key: NEVER EXPOSED (secured by KMS)`)
-    console.log(`   Using master-key-enhanced derivation`);
+    console.log("   Private key: NEVER EXPOSED (secured by KMS)");
+    console.log("   Using master-key-enhanced derivation");
 
-    // ALL parameters are required for signing
-    if (!msg32 || !client_pk33 || !client_pub_nonce) {
-      return res.status(400).json({
-        error: "Missing required parameters for signing",
-        required: ["msg32", "client_pk33", "client_pub_nonce"],
-        received: {
-          msg32: msg32 || "empty",
-          client_pk33: client_pk33 || "empty",
-          client_pub_nonce: client_pub_nonce || "empty",
-        },
-      });
-    }
+    const partials = [];
 
-    // Parse and validate inputs
-    const messageBytes = Buffer.from(msg32, "hex");
-    const clientPubkey = Buffer.from(client_pk33, "hex");
-    const clientNonces = Buffer.from(client_pub_nonce, "hex");
+    for (const [arrayIndex, request] of requestItems.entries()) {
+      const {
+        msg32,
+        client_pk33,
+        client_pub_nonce,
+        tweak32,
+        input_index,
+      } = request;
 
-    // Validate sizes
-    if (messageBytes.length !== 32) {
-      return res.status(400).json({
-        error: "Invalid message",
-        details: `Message must be 32 bytes (64 hex chars), got ${messageBytes.length} bytes`,
-      });
-    }
+      const currentIndex = input_index ?? arrayIndex;
 
-    if (clientPubkey.length !== 33) {
-      return res.status(400).json({
-        error: "Invalid client public key",
-        details: `Client public key must be 33 bytes compressed (66 hex chars), got ${clientPubkey.length} bytes`,
-      });
-    }
-
-    if (clientNonces.length !== 66) {
-      return res.status(400).json({
-        error: "Invalid client nonces",
-        details: `Client nonces must be 66 bytes (132 hex chars), got ${clientNonces.length} bytes`,
-      });
-    }
-
-    // Prepare tweaks if provided (for Taproot)
-    let tweaks = [];
-    let tweakModes = [];
-    if (tweak32) {
-      const tweakBytes = Buffer.from(tweak32, "hex");
-      if (tweakBytes.length !== 32) {
+      if (!msg32 || !client_pk33 || !client_pub_nonce) {
         return res.status(400).json({
-          error: "Invalid tweak",
-          details: `Tweak must be 32 bytes (64 hex chars), got ${tweakBytes.length} bytes`,
+          error: "Missing required parameters for signing",
+          input_index: currentIndex,
+          required: ["msg32", "client_pk33", "client_pub_nonce"],
+          received: {
+            msg32: msg32 || "empty",
+            client_pk33: client_pk33 || "empty",
+            client_pub_nonce: client_pub_nonce || "empty",
+          },
         });
       }
-      tweaks = [tweakBytes];
-      tweakModes = [true]; // X-only mode for BIP341 Taproot
-      console.log(`   Using Taproot tweak: ${tweak32.slice(0, 16)}...`);
+
+      const messageBytes = Buffer.from(msg32, "hex");
+      const clientPubkey = Buffer.from(client_pk33, "hex");
+      const clientNonces = Buffer.from(client_pub_nonce, "hex");
+
+      if (messageBytes.length !== 32) {
+        return res.status(400).json({
+          error: "Invalid message",
+          input_index: currentIndex,
+          details: `Message must be 32 bytes (64 hex chars), got ${messageBytes.length} bytes`,
+        });
+      }
+
+      if (clientPubkey.length !== 33) {
+        return res.status(400).json({
+          error: "Invalid client public key",
+          input_index: currentIndex,
+          details: `Client public key must be 33 bytes compressed (66 hex chars), got ${clientPubkey.length} bytes`,
+        });
+      }
+
+      if (clientNonces.length !== 66) {
+        return res.status(400).json({
+          error: "Invalid client nonces",
+          input_index: currentIndex,
+          details: `Client nonces must be 66 bytes (132 hex chars), got ${clientNonces.length} bytes`,
+        });
+      }
+
+      let tweaks = [];
+      let tweakModes = [];
+      if (tweak32) {
+        const tweakBytes = Buffer.from(tweak32, "hex");
+        if (tweakBytes.length !== 32) {
+          return res.status(400).json({
+            error: "Invalid tweak",
+            input_index: currentIndex,
+            details: `Tweak must be 32 bytes (64 hex chars), got ${tweakBytes.length} bytes`,
+          });
+        }
+        tweaks = [tweakBytes];
+        tweakModes = [true];
+        console.log(`   Using Taproot tweak (input ${currentIndex}): ${tweak32.slice(0, 16)}...`);
+      }
+
+      const auxRand = createHash("sha256")
+        .update(Buffer.from(`${Date.now()}-${currentIndex}`))
+        .update(messageBytes)
+        .update(clientPubkey)
+        .digest();
+
+      const sortedKeys = musig2.sortKeys([publicKey, clientPubkey]);
+
+      const det = await kmsOps.performMuSig2SignInHSM(
+        prfBytes,
+        wallet_id,
+        clientNonces,
+        sortedKeys,
+        messageBytes,
+        tweaks,
+        tweakModes,
+        auxRand,
+      );
+
+      const signature = bytesToHex(det.partialSig);
+      const serverNonce = bytesToHex(det.publicNonce);
+
+      console.log(`✅ Created partial signature (input ${currentIndex})`);
+      console.log(`   Partial sig: ${signature.slice(0, 20)}...`);
+      console.log(`   Server nonce: ${serverNonce.slice(0, 20)}...`);
+
+      partials.push({
+        input_index: currentIndex,
+        server_partial32: signature,
+        server_pub_nonce66: serverNonce,
+        tweaked: !!tweak32,
+      });
     }
 
-    // Create unique auxiliary randomness (prevents nonce reuse)
-    const nonceCounter = Date.now();
-    const auxRand = createHash("sha256")
-      .update(Buffer.from(nonceCounter.toString()))
-      .update(messageBytes)
-      .update(clientPubkey)
-      .digest();
+    const exp = Date.now() + 60000;
+    let responseData;
 
-    // Create partial signature using HSM - private key NEVER exposed
-    const sortedKeys = musig2.sortKeys([publicKey, clientPubkey]);
+    if (partials.length === 1) {
+      const single = partials[0];
+      responseData = {
+        ...single,
+        request_id: wallet_id,
+        exp,
+      };
+    } else {
+      responseData = {
+        partials,
+        request_id: wallet_id,
+        exp,
+      };
+    }
 
-    // Perform signing entirely via KMS
-    const det = await kmsOps.performMuSig2SignInHSM(
-      prfBytes,
-      wallet_id,
-      clientNonces,
-      sortedKeys,
-      messageBytes,
-      tweaks, // Include tweak if provided
-      tweakModes, // Use scalar mode for Taproot
-      auxRand, // Unique auxiliary randomness
-    );
-
-    const signature = bytesToHex(det.partialSig);
-    const serverNonce = bytesToHex(det.publicNonce);
-
-    console.log(`✅ Created partial signature`);
-    console.log(`   Partial sig: ${signature.slice(0, 20)}...`);
-    console.log(`   Server nonce: ${serverNonce.slice(0, 20)}...`);
-
-    // Prepare response data
-    const responseData = {
-      server_partial32: signature,
-      server_pub_nonce66: serverNonce,
-      request_id: wallet_id,
-      exp: Date.now() + 60000, // 1 minute expiration
-      tweaked: !!tweak32, // Indicate if tweak was applied
-    };
-
-    // If pk_app provided, encrypt response and return deep link
     if (pk_app) {
       try {
         const appPubKeyBytes = base64url.toBuffer(pk_app);
@@ -884,7 +913,6 @@ app.post("/sign-with-prf", async (req, res) => {
           throw new Error("Encryption failed");
         }
 
-        // Build redirect URL with encrypted data (matches example server)
         const redirectUrl = return_url || "nuri://signature";
         const separator = redirectUrl.includes("?") ? "&" : "?";
         const finalUrl = `${redirectUrl}${separator}state=${state || ""}&data=${encryptedData}`;
@@ -901,7 +929,6 @@ app.post("/sign-with-prf", async (req, res) => {
         });
       }
     } else {
-      // No encryption, return plain JSON
       res.json(responseData);
     }
   } catch (error) {

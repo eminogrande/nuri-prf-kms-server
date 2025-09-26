@@ -130,16 +130,30 @@ WebAuthn PRF setup page for wallet creation.
 ### POST /sign-with-prf
 Create MuSig2 partial signature.
 
-Required parameters:
-- `wallet_id`: Wallet identifier
-- `prf`: PRF value from WebAuthn
-- `msg32`: 32-byte message to sign (hex)
-- `client_pk33`: Client's public key (33 bytes, hex)
-- `client_pub_nonce`: Client's public nonces (66 bytes, hex)
+You can send either a single input (legacy payload) or a batch:
 
-Optional:
-- `tweak32`: Taproot tweak (32 bytes, hex)
-- `pk_app`: App's X25519 public key for response encryption
+```jsonc
+// batched example
+{
+  "wallet_id": "...",
+  "prf": "base64url",
+  "sign_requests": [
+    {
+      "input_index": 0,
+      "msg32": "...",
+      "client_pk33": "...",
+      "client_pub_nonce": "...",
+      "tweak32": "..." // optional
+    },
+    { "input_index": 1, "msg32": "...", ... }
+  ],
+  "pk_app": "base64url",
+  "state": "...",
+  "return_url": "nuri://signature"
+}
+```
+
+Legacy fields (`msg32`, `client_pk33`, `client_pub_nonce`) still work; the server returns the original structure when only one input is provided. For multiple inputs, the response contains `partials: [{ input_index, server_partial32, server_pub_nonce66, tweaked }, ...]`.
 
 ## Testing
 
