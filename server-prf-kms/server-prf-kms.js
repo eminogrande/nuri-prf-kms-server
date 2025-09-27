@@ -748,7 +748,7 @@ app.get("/sign", async (req, res) => {
 app.post("/sign-with-prf", async (req, res) => {
   console.log("POST /sign-with-prf", req.body);
 
-  const { wallet_id, prf, sign_requests, state, return_url, pk_app } = req.body;
+  const { wallet_id, prf, sign_requests, signRequests, state, return_url, pk_app } = req.body;
 
   if (!prf || !wallet_id) {
     return res.status(400).json({ error: "Missing required parameters" });
@@ -757,8 +757,14 @@ app.post("/sign-with-prf", async (req, res) => {
   try {
     const prfBytes = base64url.toBuffer(prf);
 
-    const requestItems = Array.isArray(sign_requests) && sign_requests.length
+    const batchRequests = Array.isArray(sign_requests) && sign_requests.length
       ? sign_requests
+      : Array.isArray(signRequests) && signRequests.length
+        ? signRequests
+        : null;
+
+    const requestItems = batchRequests && batchRequests.length
+      ? batchRequests
       : [
           {
             msg32: req.body.msg32,
