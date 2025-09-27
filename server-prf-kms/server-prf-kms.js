@@ -484,6 +484,27 @@ app.get("/sign", async (req, res) => {
     const amount = req.query.amount;
     const to_address = req.query.to_address;
 
+    const signRequestsParam = pick(
+      req.query,
+      "sign_requests",
+      "signRequests",
+    );
+
+    let signRequests = [];
+    if (signRequestsParam) {
+      try {
+        const parsed =
+          typeof signRequestsParam === "string"
+            ? JSON.parse(signRequestsParam)
+            : signRequestsParam;
+        if (Array.isArray(parsed)) {
+          signRequests = parsed;
+        }
+      } catch (err) {
+        console.warn("[/sign] failed to parse sign_requests", err);
+      }
+    }
+
     // Step 1: Log what we actually received
     console.log("\n📥 [STEP 1] Received Parameters:");
     console.log("[/sign] received", {
@@ -629,6 +650,15 @@ app.get("/sign", async (req, res) => {
             </div>`
                 : ""
             }
+            ${
+              signRequests.length
+                ? `
+            <div class="detail-row">
+                <span class="detail-label">Inputs:</span>
+                <span class="detail-value">${signRequests.length}</span>
+            </div>`
+                : ""
+            }
         </div>
 
         <button onclick="signWithPasskey()">Sign with Passkey</button>
@@ -637,6 +667,7 @@ app.get("/sign", async (req, res) => {
     </div>
 
     <script>
+        const signRequests = ${JSON.stringify(signRequests)};
         async function signWithPasskey() {
             const status = document.getElementById('status');
             status.className = '';
@@ -681,22 +712,29 @@ app.get("/sign", async (req, res) => {
 
                 status.textContent = 'Signing transaction...';
 
+                const payload = {
+                    wallet_id: '${wallet_id || ""}',
+                    prf: prfBase64,
+                    msg32: '${msg32 || ""}',
+                    client_pk33: '${client_pk33 || ""}',
+                    client_pub_nonce: '${client_pub_nonce || ""}',
+                    tweak32: '${tweak32 || ""}',
+                    psbt_b64: '${psbt_b64 || ""}',
+                    pk_app: '${pk_app || ""}',
+                    state: '${state || ""}',
+                    return_url: '${return_url || ""}'
+                };
+
+                if (Array.isArray(signRequests) && signRequests.length > 0) {
+                    payload.sign_requests = signRequests;
+                    payload.signRequests = signRequests;
+                }
+
                 // Send PRF to server to sign
                 const response = await fetch('/sign-with-prf', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        wallet_id: '${wallet_id || ""}',
-                        prf: prfBase64,
-                        msg32: '${msg32 || ""}',
-                        client_pk33: '${client_pk33 || ""}',
-                        client_pub_nonce: '${client_pub_nonce || ""}',
-                        tweak32: '${tweak32 || ""}',
-                        psbt_b64: '${psbt_b64 || ""}',
-                        pk_app: '${pk_app || ""}',
-                        state: '${state || ""}',
-                        return_url: '${return_url || ""}'
-                    })
+                    body: JSON.stringify(payload)
                 });
 
                 if (!response.ok) {
